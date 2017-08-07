@@ -13,9 +13,10 @@ import javax.security.auth.login.LoginException;
 
 public class Main implements EventListener
 {
-    public static void main(String[] args)
+    public static String[] argsGlobal;
 
-            throws IllegalArgumentException, LoginException, RateLimitedException {
+    public static void main(String[] args) throws IllegalArgumentException, LoginException, RateLimitedException {
+        argsGlobal = args;
         if (args.length < 1) {
             System.out.println("Please include the Token as a parameter.");
         } else {

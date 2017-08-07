@@ -44,7 +44,7 @@ public class CheckNameLoL {
 
                 return "The name is open";
             } else {
-                return "The name is available!";//else if ()
+                return "Uhhh something broke";//else if ()
             }
         }catch (MalformedURLException e) {
             e.printStackTrace();
