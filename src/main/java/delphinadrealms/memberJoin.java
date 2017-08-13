@@ -22,4 +22,8 @@ public class memberJoin {
         System.out.println("Someone has joined, and they are being given the role: " + ((GuildMemberJoinEvent) event).getGuild().getRoleById(334196042436182018L));
 
     }
+
+    public void memberJoinedEvent(Event event) {
+
+    }
 }

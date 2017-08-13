@@ -12,25 +12,73 @@ import java.util.Date;
  */
 public class SQLManager {
 
-    private Connection connect = null;
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
-
-    public void connectToDatabase(String[]data) throws Exception{
-        String hostname = data[1];
-        String username = data[2];
-        String password = data[3];
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connect = DriverManager.getConnection("jbdc:mysql:://" + hostname + "/feedback?user=" + username + "&password=" + password);
-        } catch (Exception e) {
-
-        }
+    public SQLManager() {
+        this.connect = null;
 
     }
 
-    public void writeData() {
+    private Connection connect = null;
 
+    public void connect() {
+        try {
+            String url = "jdbc:SQLite:/root/discordbot.db";
+            connect = DriverManager.getConnection(url);
+            System.out.println("Connection to SQLite has been established.");
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+    //                            SERVER ID          snedJoinMessageChannelID sendLeaveMessage.. sendJoinMessage SendLeaveMessage enablePUBG enableLeague
+    //INSERT INTO SERVERS VALUES (334189774741045249,334190910852169729,334190910852169729,"true","true","true","true");
+
+
+    public void addServer(long serverID,long joinMessageChannelID, long leaveMessageChannelID, boolean sendJoinMessage, boolean sendLeaveMessage, boolean enablePUBG, boolean enableLeague) {
+        if (!connect.equals(null)) {
+            try {
+                String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + joinMessageChannelID + "," + leaveMessageChannelID + "," +  sendJoinMessage + "," + sendLeaveMessage + "," + enablePUBG + ","
+                        + enableLeague + ");";
+                Statement statement = connect.createStatement();
+                statement.executeQuery(command);
+
+            } catch (SQLException e) {
+
+            }
+        }
+    }
+
+    public void removeServer(long serverID) {
+        if (!connect.equals(null)) {
+            try {
+                String command = "DELETE FROM servers WHERE serverid=" + serverID + ";";
+                Statement statement = connect.createStatement();
+                statement.executeQuery(command);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public boolean isConnectionNull() {
+        if (connect.equals(null)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean getServerJoinMessageEnabled(long serverID) {
+        if (!connect.equals(null)) {
+            String command = "SELECT sendJoinMessage FROM servers WHERE serverid=" + serverID + ";";
+            try {
+                Statement statement = connect.createStatement();
+            } catch (SQLException e) {
+                System.out.println("Error on in SQLManager.java in getServerJoinMessageEnabled.\n" + e.getMessage());
+            }
+
+
+        }
+return true;
     }
 }
