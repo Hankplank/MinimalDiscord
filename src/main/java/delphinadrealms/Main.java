@@ -44,8 +44,8 @@ public class Main implements EventListener
             messageRecieved.messageRecieved(event);
 
         } else if (event instanceof GuildMemberLeaveEvent) {
-            ((GuildMemberLeaveEvent) event).getGuild().getTextChannelById(334190910852169729L).sendMessage("Bye, " +
-                    ((GuildMemberLeaveEvent) event).getMember().getEffectiveName() + "  has left the server...").queue();
+            memberLeave memberleave = new memberLeave();
+            memberleave.memberLeftEvent(event);
 
         } else if (event instanceof GuildLeaveEvent) {
             if (!sqlManager.isConnectionNull()) {
