@@ -35,10 +35,10 @@ public class SQLManager {
     //INSERT INTO SERVERS VALUES (334189774741045249,334190910852169729,334190910852169729,"true","true","true","true");
 
 
-    public void addServer(long serverID,long joinMessageChannelID, long leaveMessageChannelID, boolean sendJoinMessage, boolean sendLeaveMessage, boolean enablePUBG, boolean enableLeague) {
+    public void addServer(long serverID,long lobbyChannelID, boolean sendJoinMessage, boolean sendLeaveMessage, boolean enablePUBG, boolean enableLeague) {
         if (!connect.equals(null)) {
             try {
-                String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + joinMessageChannelID + "," + leaveMessageChannelID + "," +  sendJoinMessage + "," + sendLeaveMessage + "," + enablePUBG + ","
+                String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + "," +  sendJoinMessage + "," + sendLeaveMessage + "," + enablePUBG + ","
                         + enableLeague + ");";
                 Statement statement = connect.createStatement();
                 statement.executeQuery(command);
@@ -67,7 +67,7 @@ public class SQLManager {
                 String command = "SELECT * FROM SERVERS WHERE SERVERID=" + serverID + ";";
                 Statement statement = connect.createStatement();
                 ResultSet rs = statement.executeQuery(command);
-                return rs.getLong("joinMessageChannelID");
+                return rs.getLong("lobbyChannelID");
 
             } catch (SQLException e) {
                 return 0;
