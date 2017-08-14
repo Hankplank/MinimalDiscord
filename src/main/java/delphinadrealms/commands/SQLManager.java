@@ -21,7 +21,7 @@ public class SQLManager {
 
     public void connect() {
         try {
-            String url = "jdbc:SQLite:/root/discordbot.db";
+            String url = "jdbc:SQLite:/root/SQLBot/discordbot.db";
             connect = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
 
@@ -41,7 +41,7 @@ public class SQLManager {
                         + enableLeague + ");";
                 Statement statement = connect.createStatement();
                 statement.executeQuery(command);
-
+                System.out.println("New server has been added with the serverID of: " + serverID + ".");
             } catch (SQLException e) {
 
             }

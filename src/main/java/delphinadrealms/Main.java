@@ -3,6 +3,7 @@ package delphinadrealms;
 import delphinadrealms.commands.SQLManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
@@ -35,34 +36,37 @@ public class Main implements EventListener
 
     @Override
     public void onEvent(Event event) {
-        if (event instanceof GuildMemberJoinEvent) {
+        if (event instanceof GuildMemberJoinEvent && !((GuildMemberJoinEvent) event).getMember().getUser().isBot()) {
             memberJoin member = new memberJoin();
             member.memberJoinedEvent(event);
+
+        } else if (event instanceof GuildMemberLeaveEvent && !((GuildMemberLeaveEvent) event).getMember().getUser().isBot()) {
+            memberLeave memberleave = new memberLeave();
+            memberleave.memberLeftEvent(event);
 
         } else if (event instanceof MessageReceivedEvent && ((MessageReceivedEvent) event).getMessage().toString().contains(Settings.COMMAND_PREFIX)) {
             messageRecievedEvent messageRecieved = new messageRecievedEvent();
             messageRecieved.messageRecieved(event);
 
-        } else if (event instanceof GuildMemberLeaveEvent) {
-            memberLeave memberleave = new memberLeave();
-            memberleave.memberLeftEvent(event);
-
         } else if (event instanceof GuildLeaveEvent) {
             if (!sqlManager.isConnectionNull()) {
                 sqlManager.removeServer(((GuildLeaveEvent) event).getGuild().getIdLong());
-            } else {
+            } else if (sqlManager.isConnectionNull()) {
                 sqlManager.connect();
                 sqlManager.removeServer(((GuildLeaveEvent) event).getGuild().getIdLong());
             }
 
         } else if (event instanceof GuildJoinEvent) {
             if (!sqlManager.isConnectionNull()) {
-                long lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelById("lobby").getIdLong();
-                long generalID = ((GuildJoinEvent) event).getGuild().getTextChannelById("general").getIdLong();
+                long lobbyID;
+                if (((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).equals(ChannelType.TEXT)) {
+
+                    lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getIdLong();
+                } else {
+                    lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("general",true).get(0).getIdLong();
+                }
                 if (Long.toString(lobbyID).length()== 18) {
-                    sqlManager.addServer(((GuildJoinEvent) event).getGuild().getIdLong(), lobbyID, false, false, true, true);
-                } else if (Long.toString(generalID).length() == 18) {
-                    sqlManager.addServer(((GuildJoinEvent) event).getGuild().getIdLong(), generalID, false, false, true, true);
+                    sqlManager.addServer(((GuildJoinEvent) event).getGuild().getIdLong(), lobbyID, true, true, true, true);
                 } else {
                     sqlManager.addServer(((GuildJoinEvent) event).getGuild().getIdLong(),0,false,false,true,true);
                 }

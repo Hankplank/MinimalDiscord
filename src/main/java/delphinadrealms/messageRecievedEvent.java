@@ -89,10 +89,13 @@ public class messageRecievedEvent {
            //     channel.sendMessage("Please follow the example format: " + Settings.COMMAND_PREFIX + "pubg almostfamous,na:squad").queue();
             } else if (messageFormatted.contains("help")) {
             commandList.printHelpComamnd(channel);
-        } else if (messageFormatted.contains("changelobby")) {
+        } else if (messageFormatted.startsWith("changelobby")) {
             if (message.getMember().getPermissions().toString().contains("Administrator")) {
-                
+
             }
+        } else if (messageFormatted.startsWith("addserver")) {
+            Main.sqlManager.addServer(((MessageReceivedEvent) event).getGuild().getIdLong(),message.getTextChannel().getIdLong(),true,true,true,true);
+            channel.sendMessage("Adding server...").queue();
         }
 
 
