@@ -76,6 +76,7 @@ public class SQLManager {
         return 0;
     }
 
+
     public boolean getLeagueEnabled(long serverID) {
         try {
             if (!connect.isClosed()) {
@@ -136,5 +137,13 @@ public class SQLManager {
             }
         }
 return true;
+    }
+
+    public void changeLobbyID(long serverID, String channelID) {
+        if (!connect.equals(null)) {
+            String command = "UPDATE servers SET lobbyChannelID = \"" + channelID + "\" WHERE serverID = " + serverID + ";";
+            // UPDATE servers SET lobbychannelID = "334918139580252172" WHERE serverid = 334189774741045249;
+
+        }
     }
 }

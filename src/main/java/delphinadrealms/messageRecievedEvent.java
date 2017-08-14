@@ -89,6 +89,10 @@ public class messageRecievedEvent {
            //     channel.sendMessage("Please follow the example format: " + Settings.COMMAND_PREFIX + "pubg almostfamous,na:squad").queue();
             } else if (messageFormatted.contains("help")) {
             commandList.printHelpComamnd(channel);
+        } else if (messageFormatted.contains("changelobby")) {
+            if (message.getMember().getPermissions().toString().contains("Administrator")) {
+                
+            }
         }
 
 
