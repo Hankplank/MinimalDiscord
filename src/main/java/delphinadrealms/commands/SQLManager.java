@@ -25,6 +25,12 @@ public class SQLManager {
             connect = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established. At " + url);
 
+            // CREATES A NEW TABLE IF ONE DOESNT EXIST, IF ONE ALREADY EXISTS DOES NOTHING
+            String createTable = "CREATE TABLE IF NOT EXISTS servers (serverid long(18)," +
+                    " lobbyChannelID long(18), sendJoinMessage boolean, sendLeaveMessage boolean, enablePUBG boolean, enableLeague boolean);";
+            Statement createIfDoesntExist = connect.createStatement();
+            ResultSet tableExists = createIfDoesntExist.executeQuery(createTable);
+
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
@@ -37,6 +43,12 @@ public class SQLManager {
     public void addServer(long serverID,long lobbyChannelID, boolean sendJoinMessage, boolean sendLeaveMessage, boolean enablePUBG, boolean enableLeague) {
         if (!connect.equals(null)) {
             try {
+                // CREATES A NEW TABLE IF ONE DOESNT EXIST, IF ONE ALREADY EXISTS DOES NOTHING
+                String createTable = "CREATE TABLE IF NOT EXISTS servers (serverid long(18)," +
+                        " lobbyChannelID long(18), sendJoinMessage boolean, sendLeaveMessage boolean, enablePUBG boolean, enableLeague boolean);";
+                Statement createIfDoesntExist = connect.createStatement();
+                ResultSet tableExists = createIfDoesntExist.executeQuery(createTable);
+
                 String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
                         + enableLeague + "\");";
                 System.out.println("INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
