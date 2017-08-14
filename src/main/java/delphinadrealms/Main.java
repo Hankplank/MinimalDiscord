@@ -57,10 +57,10 @@ public class Main implements EventListener
             }
 
         } else if (event instanceof GuildJoinEvent) {
+            System.out.println("Joined server: " + ((GuildJoinEvent) event).getGuild().getId());
             if (!sqlManager.isConnectionNull()) {
                 long lobbyID;
-                if (((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).equals(ChannelType.TEXT)) {
-
+                if (((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getName()=="lobby") {
                     lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getIdLong();
                 } else {
                     lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("general",true).get(0).getIdLong();

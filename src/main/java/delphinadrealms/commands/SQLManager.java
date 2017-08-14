@@ -23,7 +23,7 @@ public class SQLManager {
         try {
             String url = "jdbc:SQLite:/root/SQLBot/discordbot.db";
             connect = DriverManager.getConnection(url);
-            System.out.println("Connection to SQLite has been established.");
+            System.out.println("Connection to SQLite has been established. At " + url);
 
         } catch (SQLException e){
             System.out.println(e.getMessage());
@@ -37,8 +37,10 @@ public class SQLManager {
     public void addServer(long serverID,long lobbyChannelID, boolean sendJoinMessage, boolean sendLeaveMessage, boolean enablePUBG, boolean enableLeague) {
         if (!connect.equals(null)) {
             try {
-                String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + "," +  sendJoinMessage + "," + sendLeaveMessage + "," + enablePUBG + ","
-                        + enableLeague + ");";
+                String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
+                        + enableLeague + "\");";
+                System.out.println("INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
+                        + enableLeague + "\");");
                 Statement statement = connect.createStatement();
                 statement.executeQuery(command);
                 System.out.println("New server has been added with the serverID of: " + serverID + ".");

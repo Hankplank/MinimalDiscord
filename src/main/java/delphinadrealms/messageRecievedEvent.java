@@ -22,7 +22,7 @@ public class messageRecievedEvent {
         Message message = ((MessageReceivedEvent) event).getMessage(); // creates variable for the message in a easier to see format
 
         if (messageFormatted.startsWith("roles")) {
-            System.out.println(((MessageReceivedEvent) event).getAuthor().getJDA().getRoles().toString());
+           // System.out.println(((MessageReceivedEvent) event).getAuthor().getJDA().getRoles().toString());
             channel.sendMessage("The roles this user belongs to are: " + message.getMember().getRoles()).queue();
         } else if (messageFormatted.startsWith("channel")) {
             System.out.println("Channel ID is:" + ((MessageReceivedEvent) event).getTextChannel().toString());
