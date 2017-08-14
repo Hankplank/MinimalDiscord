@@ -1,5 +1,7 @@
 package delphinadrealms.commands;
 
+import pro.lukasgorny.dto.Player;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -57,6 +59,21 @@ public class SQLManager {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public long getServerLobbyID(long serverID) {
+        if (!connect.equals(null)) {
+            try {
+                String command = "SELECT * FROM SERVERS WHERE SERVERID=" + serverID + ";";
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(command);
+                return rs.getLong("joinMessageChannelID");
+
+            } catch (SQLException e) {
+                return 0;
+            }
+        }
+        return 0;
     }
 
     public boolean isConnectionNull() {

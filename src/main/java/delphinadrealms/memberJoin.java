@@ -25,11 +25,19 @@ public class memberJoin {
     }
 
     public void memberJoinedEvent(Event event) {
-        Member member = ((GuildMemberJoinEvent) event).getMember();
         long guildID = ((GuildMemberJoinEvent) event).getGuild().getIdLong();
+
         if (Main.sqlManager.getServerJoinMessageEnabled(guildID)) {
-            event.getJDA().getTextChannelById("lobby").sendMessage("Hello "
-                    + ((GuildMemberJoinEvent) event).getMember().getAsMention() + " Welcome to the server!").queue();
+            long channelID = Main.sqlManager.getServerLobbyID(guildID);
+            if (Long.toString(channelID).equalsIgnoreCase("0")) {
+                event.getJDA().getTextChannelById("lobby").sendMessage("Hello "
+                        + ((GuildMemberJoinEvent) event).getMember().getAsMention() + " Welcome to the server!").queue();
+            } else if (Long.toString(channelID).length() == 18) {
+                event.getJDA().getTextChannelById(channelID).sendMessage("Hello "
+                        + ((GuildMemberJoinEvent) event).getMember().getAsMention() + " Welcome to the server!").queue();
+            }
+
+
         }
 
 
