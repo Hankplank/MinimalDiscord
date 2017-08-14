@@ -64,7 +64,7 @@ public class SQLManager {
     public long getServerLobbyID(long serverID) {
         if (!connect.equals(null)) {
             try {
-                String command = "SELECT * FROM SERVERS WHERE SERVERID=" + serverID + ";";
+                String command = "SELECT * FROM SERVERS WHERE serverid=" + serverID + ";";
                 Statement statement = connect.createStatement();
                 ResultSet rs = statement.executeQuery(command);
                 return rs.getLong("lobbyChannelID");
@@ -74,6 +74,40 @@ public class SQLManager {
             }
         }
         return 0;
+    }
+
+    public boolean getLeagueEnabled(long serverID) {
+        try {
+            if (!connect.isClosed()) {
+                String command = "SELECT * FROM SERVERS WHERE serverid=" + serverID + ";";
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(command);
+                return rs.getBoolean("enableLeague");
+            } else {
+                System.out.println("Something was wrong. Just returned false. getLeagueEnabled");
+                return false;
+            }
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean getPUBGEnabled(long serverID) {
+        try {
+            if (!connect.isClosed()) {
+                String command = "SELECT * FROM SERVERS WHERE serverid=" + serverID + ";";
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(command);
+                return rs.getBoolean("enablePUBG");
+            } else {
+                System.out.println("Something was wrong. Just returned false. getLeagueEnabled");
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public boolean isConnectionNull() {
