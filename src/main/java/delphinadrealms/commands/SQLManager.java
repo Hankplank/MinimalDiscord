@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 /**
  * Created by henry27 on 8/7/2017.
  */
@@ -51,7 +50,7 @@ public class SQLManager {
     public void removeServer(long serverID) {
         if (!connect.equals(null)) {
             try {
-                String command = "DELETE FROM servers WHERE serverid=" + serverID + ";";
+                String command = "DELETE FROM servers WHERE serverid=" + Long.toString(serverID) + ";";
                 Statement statement = connect.createStatement();
                 statement.executeQuery(command);
             } catch (SQLException e) {
@@ -70,14 +69,20 @@ public class SQLManager {
 
     public boolean getServerJoinMessageEnabled(long serverID) {
         if (!connect.equals(null)) {
-            String command = "SELECT sendJoinMessage FROM servers WHERE serverid=" + serverID + ";";
+            String command = "SELECT * FROM servers WHERE serverid=" + serverID + ";";
             try {
                 Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(command);
+                if (rs.getString("sendJoinMessage").equalsIgnoreCase("true")) {
+                    return true;
+                } else if (rs.getString("sendJoinMessage").equalsIgnoreCase("false")) {
+                    return false;
+                } else {
+                    return false;
+                }
             } catch (SQLException e) {
                 System.out.println("Error on in SQLManager.java in getServerJoinMessageEnabled.\n" + e.getMessage());
             }
-
-
         }
 return true;
     }

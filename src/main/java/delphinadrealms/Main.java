@@ -37,13 +37,16 @@ public class Main implements EventListener
     public void onEvent(Event event) {
         if (event instanceof GuildMemberJoinEvent) {
             memberJoin member = new memberJoin();
-            member.memberJoinEvent(event);
+            member.memberJoinedEvent(event);
+
         } else if (event instanceof MessageReceivedEvent && ((MessageReceivedEvent) event).getMessage().toString().contains(Settings.COMMAND_PREFIX)) {
             messageRecievedEvent messageRecieved = new messageRecievedEvent();
             messageRecieved.messageRecieved(event);
+
         } else if (event instanceof GuildMemberLeaveEvent) {
             ((GuildMemberLeaveEvent) event).getGuild().getTextChannelById(334190910852169729L).sendMessage("Bye, " +
                     ((GuildMemberLeaveEvent) event).getMember().getEffectiveName() + "  has left the server...").queue();
+
         } else if (event instanceof GuildLeaveEvent) {
             if (!sqlManager.isConnectionNull()) {
                 sqlManager.removeServer(((GuildLeaveEvent) event).getGuild().getIdLong());

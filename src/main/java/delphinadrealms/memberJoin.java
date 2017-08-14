@@ -1,5 +1,6 @@
 package delphinadrealms;
 
+import delphinadrealms.commands.SQLManager;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
@@ -11,7 +12,7 @@ import net.dv8tion.jda.core.managers.GuildController;
 public class memberJoin {
 
     public void memberJoinEvent(Event event) {
-        Member member= ((GuildMemberJoinEvent) event).getMember();
+        Member member = ((GuildMemberJoinEvent) event).getMember();
         ((GuildMemberJoinEvent) event).getGuild().getTextChannelById(334190910852169729L).sendMessage("Hello "
                 + ((GuildMemberJoinEvent) event).getMember().getAsMention() + " Welcome to the server!").queue();
         if (Settings.DEBUG) {
@@ -24,6 +25,13 @@ public class memberJoin {
     }
 
     public void memberJoinedEvent(Event event) {
+        Member member = ((GuildMemberJoinEvent) event).getMember();
+        long guildID = ((GuildMemberJoinEvent) event).getGuild().getIdLong();
+        if (Main.sqlManager.getServerJoinMessageEnabled(guildID)) {
+            event.getJDA().getTextChannelById("lobby").sendMessage("Hello "
+                    + ((GuildMemberJoinEvent) event).getMember().getAsMention() + " Welcome to the server!").queue();
+        }
+
 
     }
 }
