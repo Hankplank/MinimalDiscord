@@ -22,8 +22,8 @@ public class Main implements EventListener
 
     public static void main(String[] args) throws IllegalArgumentException, LoginException, RateLimitedException {
         argsGlobal = args;
-        if (args.length < 1) {
-            System.out.println("Please include the Token as a parameter.");
+        if (args.length < 2) {
+            System.out.println("Please include the Bot Token as a parameter, and the PUBG token as a parameter.");
         } else {
             new JDABuilder(AccountType.BOT).setToken(args[0]).addEventListener(new Main()).buildAsync();
         }

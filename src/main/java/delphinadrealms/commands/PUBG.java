@@ -1,5 +1,6 @@
 package delphinadrealms.commands;
 
+import delphinadrealms.Main;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import pro.lukasgorny.core.JPubg;
 import pro.lukasgorny.dto.Player;
@@ -19,7 +20,7 @@ public class PUBG {
 
         PUBGMode mode1 = getMode(mode,channel);
         PUBGRegion region1 = getRegion(region,channel);
-        JPubg jPubg = JPubgFactory.getWrapper("8d4da968-808e-40c8-a89b-668d17246c95");
+        JPubg jPubg = JPubgFactory.getWrapper(Main.argsGlobal[1]);
 
       //  System.out.println(region1.toString() + " " + mode1.toString() + " "  + username);
         if (!mode1.equals(null) && !region1.equals(null)) {
