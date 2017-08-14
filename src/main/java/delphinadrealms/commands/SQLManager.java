@@ -32,7 +32,7 @@ public class SQLManager {
 
     }
     //                            SERVER ID          snedJoinMessageChannelID sendLeaveMessage.. sendJoinMessage SendLeaveMessage enablePUBG enableLeague
-    //INSERT INTO SERVERS VALUES (334189774741045249,334190910852169729,334190910852169729,"true","true","true","true");
+    //INSERT INTO SERVERS VALUES (334189774741045249,334190910852169729,"true","true","true","true");
 
 
     public void addServer(long serverID,long lobbyChannelID, boolean sendJoinMessage, boolean sendLeaveMessage, boolean enablePUBG, boolean enableLeague) {
@@ -109,6 +109,34 @@ public class SQLManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void setLeagueEnabled(long serverid) {
+        try {
+            if (!connect.isClosed()) {
+                String command = "UPDATE servers SET enableLeague WHERE serverid=" + serverid + ";";
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(command);
+
+            }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+    }
+
+    public void setPUBGEnabled(long serverid) {
+        try {
+            if (!connect.isClosed()) {
+                String command = "UPDATE servers SET enablePUBG WHERE serverid=" + serverid + ";";
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(command);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public boolean isConnectionNull() {
