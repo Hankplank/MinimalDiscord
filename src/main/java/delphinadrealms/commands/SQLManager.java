@@ -14,6 +14,7 @@ public class SQLManager {
 
     public SQLManager() {
         this.connect = null;
+        connect();
     }
 
     private Connection connect = null;
@@ -40,21 +41,21 @@ public class SQLManager {
 
 
     public void addServer(long serverID,long lobbyChannelID, boolean sendJoinMessage, boolean sendLeaveMessage, boolean enablePUBG, boolean enableLeague) {
-        System.out.println("Working");
+
         if (!connect.equals(null)) {
+            System.out.println("Working");
             try {
                 // CREATES A NEW TABLE IF ONE DOESNT EXIST, IF ONE ALREADY EXISTS DOES NOTHING
                 String createTable = "CREATE TABLE IF NOT EXISTS servers (serverid long(18)," +
                         " lobbyChannelID long(18), sendJoinMessage boolean, sendLeaveMessage boolean, enablePUBG boolean, enableLeague boolean);";
                 Statement createIfDoesntExist = connect.createStatement();
-                ResultSet tableExists = createIfDoesntExist.executeQuery(createTable);
 
                 String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
                         + enableLeague + "\");";
-                System.out.println("INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
-                        + enableLeague + "\");");
+               /* System.out.println("INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
+                        + enableLeague + "\");"); */
                 Statement statement = connect.createStatement();
-                statement.executeQuery(command);
+                ResultSet rs = statement.executeQuery(command);
                 System.out.println("New server has been added with the serverID of: " + serverID + ".");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -65,6 +66,7 @@ public class SQLManager {
     public void removeServer(long serverID) {
         if (!connect.equals(null)) {
             try {
+                System.out.println(serverID);
                 String command = "DELETE FROM servers WHERE serverid=" + Long.toString(serverID) + ";";
                 Statement statement = connect.createStatement();
                 statement.executeQuery(command);
@@ -181,11 +183,17 @@ public class SQLManager {
     }
 
     public boolean isConnectionNull() {
-        if (connect.equals(null)) {
+        try {
+            if (connect.isClosed()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
             return true;
-        } else {
-            return false;
         }
+
     }
 
     public boolean getServerJoinMessageEnabled(long serverID) {

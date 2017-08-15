@@ -2,6 +2,8 @@ package test;
 
 import delphinadrealms.commands.SQLManager;
 
+import java.sql.ResultSet;
+
 /**
  * Created by henry27 on 8/15/2017.
  */

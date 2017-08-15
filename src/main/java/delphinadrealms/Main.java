@@ -34,7 +34,7 @@ public class Main implements EventListener
             sqlManager.connect();
         }
         */
-        testAddServer.testAddServer();
+        //testAddServer.testAddServer();
     }
 
 
@@ -67,7 +67,7 @@ public class Main implements EventListener
             System.out.println("Joined server: " + ((GuildJoinEvent) event).getGuild().getId());
             if (!sqlManager.isConnectionNull()) {
                 long lobbyID;
-                if (((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getName().equals("lobby")) {
+                if (((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getName().equalsIgnoreCase("lobby")) {
                     lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getIdLong();
                 } else {
                     lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("general",true).get(0).getIdLong();
