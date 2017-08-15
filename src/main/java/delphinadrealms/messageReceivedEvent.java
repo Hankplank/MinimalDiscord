@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 /**
  * Created by henry27 on 7/21/2017.
  */
-public class messageReceivedEvent {
+class messageReceivedEvent {
 
 
     public void messageReceived(Event event) {

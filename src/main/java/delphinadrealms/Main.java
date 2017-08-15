@@ -12,6 +12,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.EventListener;
 import javax.security.auth.login.LoginException;
+import test.testAddServer;
 
 
 public class Main implements EventListener
@@ -33,6 +34,7 @@ public class Main implements EventListener
             sqlManager.connect();
         }
         */
+        testAddServer.testAddServer();
     }
 
 
@@ -65,7 +67,7 @@ public class Main implements EventListener
             System.out.println("Joined server: " + ((GuildJoinEvent) event).getGuild().getId());
             if (!sqlManager.isConnectionNull()) {
                 long lobbyID;
-                if (((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getName()=="lobby") {
+                if (((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getName().equals("lobby")) {
                     lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getIdLong();
                 } else {
                     lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("general",true).get(0).getIdLong();

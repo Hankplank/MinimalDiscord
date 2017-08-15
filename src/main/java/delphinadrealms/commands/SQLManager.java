@@ -14,7 +14,6 @@ public class SQLManager {
 
     public SQLManager() {
         this.connect = null;
-        connect();
     }
 
     private Connection connect = null;
@@ -41,6 +40,7 @@ public class SQLManager {
 
 
     public void addServer(long serverID,long lobbyChannelID, boolean sendJoinMessage, boolean sendLeaveMessage, boolean enablePUBG, boolean enableLeague) {
+        System.out.println("Working");
         if (!connect.equals(null)) {
             try {
                 // CREATES A NEW TABLE IF ONE DOESNT EXIST, IF ONE ALREADY EXISTS DOES NOTHING
@@ -57,7 +57,7 @@ public class SQLManager {
                 statement.executeQuery(command);
                 System.out.println("New server has been added with the serverID of: " + serverID + ".");
             } catch (SQLException e) {
-
+                e.printStackTrace();
             }
         }
     }
