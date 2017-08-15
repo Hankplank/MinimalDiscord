@@ -9,10 +9,10 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 /**
  * Created by henry27 on 7/21/2017.
  */
-public class messageRecievedEvent {
+public class messageReceivedEvent {
 
 
-    public void messageRecieved(Event event) {
+    public void messageReceived(Event event) {
 
         String messageFormatted = ((MessageReceivedEvent) event).getMessage().getRawContent().replace(Settings.COMMAND_PREFIX, ""); // removes the command prefix from the command
         MessageChannel channel = ((MessageReceivedEvent) event).getChannel(); //gets the text channel that the mesasge is sent in

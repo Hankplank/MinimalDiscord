@@ -49,8 +49,8 @@ public class Main implements EventListener
             memberleave.memberLeftEvent(event);
 
         } else if (event instanceof MessageReceivedEvent && ((MessageReceivedEvent) event).getMessage().toString().contains(Settings.COMMAND_PREFIX)) {
-            messageRecievedEvent messageRecieved = new messageRecievedEvent();
-            messageRecieved.messageRecieved(event);
+            messageReceivedEvent messageReceived = new messageReceivedEvent();
+            messageReceived.messageReceived(event);
 
         } else if (event instanceof GuildLeaveEvent) {
             System.out.println("Left guild with the name: " + ((GuildLeaveEvent) event).getGuild().getName());
