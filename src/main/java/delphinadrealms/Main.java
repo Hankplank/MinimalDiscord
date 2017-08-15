@@ -3,7 +3,6 @@ package delphinadrealms;
 import delphinadrealms.commands.SQLManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
@@ -29,8 +28,9 @@ public class Main implements EventListener
             new JDABuilder(AccountType.BOT).setToken(args[0]).addEventListener(new Main()).buildAsync();
         }
         sqlManager = new SQLManager();
-        sqlManager.connect();
-
+        if (sqlManager.isConnectionNull()) {
+            sqlManager.connect();
+        }
     }
 
 

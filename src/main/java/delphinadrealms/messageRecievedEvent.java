@@ -1,9 +1,6 @@
 package delphinadrealms;
 
-import delphinadrealms.commands.CheckNameLoL;
-import delphinadrealms.commands.PUBG;
-import delphinadrealms.commands.commandList;
-import delphinadrealms.commands.getLeagueMatch;
+import delphinadrealms.commands.*;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.Event;
@@ -61,32 +58,19 @@ public class messageRecievedEvent {
             channel.sendMessage("Your user id is: " + userID).queue();
 
         } else if (messageFormatted.startsWith("pubg")) {
-           // if (messageFormatted.contains(",") && messageFormatted.contains(":")) {
-
                 String username = messageFormatted.substring(5);
                 username = username.substring(0, username.indexOf(","));
                 //##pubg almostfamous,na:solo
                 String region = messageFormatted.substring(messageFormatted.indexOf(","), messageFormatted.indexOf(":"));
-                //messageFormatted = messageFormatted.substring(messageFormatted.lastIndexOf(","),messageFormatted.indexOf(":"));
                 region = region.replace(",", "");
                 region = region.replace(":", "");
-                //region = region.replace()
-                //System.out.println(region);
                 String mode = messageFormatted.substring(messageFormatted.indexOf(":"));
                 mode = mode.replace(":", "");
-                //System.out.println(mode);
                 if (mode.equalsIgnoreCase("all")) {
                     PUBG.getAllPUBGStats(channel,username,region);
                 } else if (mode.equalsIgnoreCase("solo") || mode.equalsIgnoreCase("duo") || mode.equalsIgnoreCase("squad")){
                     PUBG.getPubgStats(channel, username, region, mode);
                 }
-                //if (region.equalsIgnoreCase("na") || region.equalsIgnoreCase("eu") && mode.equalsIgnoreCase("solo") || mode.equalsIgnoreCase("duo") || mode.equalsIgnoreCase("squad")) {
-
-                //} else {
-                //channel.sendMessage("Proper format for the command is: "+ Settings.COMMAND_PREFIX + "pubg almostfamous,na:solo").queue();
-                //}
-           // } else {
-           //     channel.sendMessage("Please follow the example format: " + Settings.COMMAND_PREFIX + "pubg almostfamous,na:squad").queue();
             } else if (messageFormatted.contains("help")) {
             commandList.printHelpComamnd(channel);
         } else if (messageFormatted.startsWith("changelobby")) {
@@ -96,9 +80,16 @@ public class messageRecievedEvent {
         } else if (messageFormatted.startsWith("addserver")) {
             Main.sqlManager.addServer(((MessageReceivedEvent) event).getGuild().getIdLong(),message.getTextChannel().getIdLong(),true,true,true,true);
             channel.sendMessage("Adding server...").queue();
+        } else if (messageFormatted.startsWith("disablepubg")) {
+            enableDisablePubg.changePubgEnabled(message,false);
+        } else if (messageFormatted.startsWith("enablepubg")) {
+            enableDisablePubg.changePubgEnabled(message,true);
+        } else if (messageFormatted.startsWith("disableleague")) {
+            enableDisablePubg.changeLeagueEnabled(message,false);
+        } else if (messageFormatted.startsWith("enableleague")) {
+            enableDisablePubg.changeLeagueEnabled(message, true);
+
         }
-
-
 
         }
 

@@ -14,7 +14,7 @@ public class SQLManager {
 
     public SQLManager() {
         this.connect = null;
-
+        connect();
     }
 
     private Connection connect = null;
@@ -127,9 +127,9 @@ public class SQLManager {
     public void setLeagueEnabled(long serverid) {
         try {
             if (!connect.isClosed()) {
-                String command = "UPDATE servers SET enableLeague WHERE serverid=" + serverid + ";";
+                String command = "UPDATE servers SET enableLeague = \"true\" WHERE serverid=" + serverid + ";";
                 Statement statement = connect.createStatement();
-                ResultSet rs = statement.executeQuery(command);
+                statement.executeQuery(command);
 
             }
             } catch (SQLException e) {
@@ -138,12 +138,40 @@ public class SQLManager {
 
     }
 
+    public void setLeagueDisabled(long serverid) {
+        try {
+            if (!connect.isClosed()) {
+                String command = "UPDATE servers SET enableLeague = \"false\" WHERE serverid=" + serverid + ";";
+                Statement statement = connect.createStatement();
+                statement.executeQuery(command);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void setPUBGEnabled(long serverid) {
         try {
             if (!connect.isClosed()) {
-                String command = "UPDATE servers SET enablePUBG WHERE serverid=" + serverid + ";";
+                String command = "UPDATE servers SET enablePUBG = \"true\" WHERE serverid=" + serverid + ";";
                 Statement statement = connect.createStatement();
-                ResultSet rs = statement.executeQuery(command);
+                statement.executeQuery(command);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setPUBGDisabled(long serverid) {
+        try {
+            if (!connect.isClosed()) {
+                String command = "UPDATE servers SET enablePUBG = \"false\" WHERE serverid=" + serverid + ";";
+                Statement statement = connect.createStatement();
+                statement.executeQuery(command);
 
             }
         } catch (SQLException e) {
