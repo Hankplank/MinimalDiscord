@@ -21,7 +21,7 @@ public class SQLManager {
 
     public void connect() {
         try {
-            String url = "./discordbot.db";
+            String url = "jdbc:SQLite:/root/SQLBot/discordbot.db";
             connect = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established. At " + url);
 

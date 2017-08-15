@@ -28,19 +28,23 @@ public class Main implements EventListener
             new JDABuilder(AccountType.BOT).setToken(args[0]).addEventListener(new Main()).buildAsync();
         }
         sqlManager = new SQLManager();
+        /*
         if (sqlManager.isConnectionNull()) {
             sqlManager.connect();
         }
+        */
     }
 
 
     @Override
     public void onEvent(Event event) {
         if (event instanceof GuildMemberJoinEvent && !((GuildMemberJoinEvent) event).getMember().getUser().isBot()) {
+            System.out.println("Member joined with the name:" + ((GuildMemberJoinEvent) event).getMember().getEffectiveName());
             memberJoin member = new memberJoin();
             member.memberJoinedEvent(event);
 
         } else if (event instanceof GuildMemberLeaveEvent && !((GuildMemberLeaveEvent) event).getMember().getUser().isBot()) {
+            System.out.println("User left with the name: " + ((GuildMemberLeaveEvent) event).getMember().getEffectiveName());
             memberLeave memberleave = new memberLeave();
             memberleave.memberLeftEvent(event);
 
@@ -49,6 +53,7 @@ public class Main implements EventListener
             messageRecieved.messageRecieved(event);
 
         } else if (event instanceof GuildLeaveEvent) {
+            System.out.println("Left guild with the name: " + ((GuildLeaveEvent) event).getGuild().getName());
             if (!sqlManager.isConnectionNull()) {
                 sqlManager.removeServer(((GuildLeaveEvent) event).getGuild().getIdLong());
             } else if (sqlManager.isConnectionNull()) {
@@ -72,6 +77,7 @@ public class Main implements EventListener
                 }
 
             } else {
+                System.out.println("sqlManager wasn't connected, trying to connect then trying again.");
                 sqlManager.connect();
                 sqlManager.addServer(((GuildJoinEvent) event).getGuild().getIdLong(),0,false,false,true,true);
             }
