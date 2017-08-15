@@ -51,7 +51,7 @@ public class PUBG {
     }
 
     public static  void getAllPUBGStats(MessageChannel channel, String username, String region) {
-        JPubg pubg = JPubgFactory.getWrapper("8d4da968-808e-40c8-a89b-668d17246c95");
+        JPubg pubg = JPubgFactory.getWrapper(Main.argsGlobal[1]);
         PUBGRegion pubgRegion = getRegion(region,channel);
         if (!pubgRegion.equals(null)) {
             try {
