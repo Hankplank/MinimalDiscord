@@ -37,7 +37,6 @@ public class Main implements EventListener
         //testAddServer.testAddServer();
     }
 
-
     @Override
     public void onEvent(Event event) {
         if (event instanceof GuildMemberJoinEvent && !((GuildMemberJoinEvent) event).getMember().getUser().isBot()) {
