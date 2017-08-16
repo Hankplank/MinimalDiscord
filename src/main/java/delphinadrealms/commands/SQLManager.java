@@ -69,7 +69,8 @@ public class SQLManager {
                 System.out.println(serverID);
                 String command = "DELETE FROM servers WHERE serverid=" + Long.toString(serverID) + ";";
                 Statement statement = connect.createStatement();
-                statement.executeQuery(command);
+                ResultSet rs = statement.executeQuery(command);
+
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }

@@ -58,14 +58,11 @@ class messageReceivedEvent {
             channel.sendMessage("Your user id is: " + userID).queue();
 
         } else if (messageFormatted.startsWith("pubg")) {
-                String username = messageFormatted.substring(5);
-                username = username.substring(0, username.indexOf(","));
-                //##pubg almostfamous,na:solo
-                String region = messageFormatted.substring(messageFormatted.indexOf(","), messageFormatted.indexOf(":"));
-                region = region.replace(",", "");
-                region = region.replace(":", "");
-                String mode = messageFormatted.substring(messageFormatted.indexOf(":"));
-                mode = mode.replace(":", "");
+                messageFormatted = messageFormatted.substring(5);
+                String[] args = messageFormatted.split(" ");
+                String username = args[0];
+                String region = args[1];
+                String mode = args[2];
                 if (mode.equalsIgnoreCase("all")) {
                     PUBG.getAllPUBGStats(channel,username,region);
                 } else if (mode.equalsIgnoreCase("solo") || mode.equalsIgnoreCase("duo") || mode.equalsIgnoreCase("squad")){
