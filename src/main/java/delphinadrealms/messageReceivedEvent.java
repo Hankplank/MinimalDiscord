@@ -17,6 +17,7 @@ class messageReceivedEvent {
         String messageFormatted = ((MessageReceivedEvent) event).getMessage().getRawContent().replace(Settings.COMMAND_PREFIX, ""); // removes the command prefix from the command
         MessageChannel channel = ((MessageReceivedEvent) event).getChannel(); //gets the text channel that the mesasge is sent in
         Message message = ((MessageReceivedEvent) event).getMessage(); // creates variable for the message in a easier to see format
+        String[] args = messageFormatted.split(" ");
 
         if (messageFormatted.startsWith("roles")) {
            // System.out.println(((MessageReceivedEvent) event).getAuthor().getJDA().getRoles().toString());
@@ -58,11 +59,9 @@ class messageReceivedEvent {
             channel.sendMessage("Your user id is: " + userID).queue();
 
         } else if (messageFormatted.startsWith("pubg")) {
-                messageFormatted = messageFormatted.substring(5);
-                String[] args = messageFormatted.split(" ");
-                String username = args[0];
-                String region = args[1];
-                String mode = args[2];
+                String username = args[1];
+                String region = args[2];
+                String mode = args[3];
                 if (mode.equalsIgnoreCase("all")) {
                     PUBG.getAllPUBGStats(channel,username,region);
                 } else if (mode.equalsIgnoreCase("solo") || mode.equalsIgnoreCase("duo") || mode.equalsIgnoreCase("squad")){
@@ -71,8 +70,8 @@ class messageReceivedEvent {
             } else if (messageFormatted.contains("help")) {
             commandList.printHelpComamnd(channel);
         } else if (messageFormatted.startsWith("changelobby")) {
-            if (message.getMember().getPermissions().toString().contains("Administrator")) {
-
+            if (message.getMember().getPermissions().toString().contains("ADMINISTRATOR")) {
+                System.out.println("True");
             }
         } else if (messageFormatted.startsWith("addserver")) {
             Main.sqlManager.addServer(((MessageReceivedEvent) event).getGuild().getIdLong(),message.getTextChannel().getIdLong(),true,true,true,true);
