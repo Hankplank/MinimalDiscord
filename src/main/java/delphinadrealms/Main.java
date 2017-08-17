@@ -54,16 +54,19 @@ public class Main implements EventListener
 
         } else if (event instanceof GuildLeaveEvent) {
             System.out.println("Left guild with the name: " + ((GuildLeaveEvent) event).getGuild().getName());
-            if (!sqlManager.isConnectionNull()) {
-                sqlManager.removeServer(((GuildLeaveEvent) event).getGuild().getIdLong());
-            } else if (sqlManager.isConnectionNull()) {
-                sqlManager.connect();
-                sqlManager.removeServer(((GuildLeaveEvent) event).getGuild().getIdLong());
+            SQLManager sql = new SQLManager();
+            if (!sql.isConnectionNull()) {
+                sql.removeServer(((GuildLeaveEvent) event).getGuild().getIdLong());
+            } else if (sql.isConnectionNull()) {
+                sql.connect();
+                sql.removeServer(((GuildLeaveEvent) event).getGuild().getIdLong());
             }
+            sql.close();
 
         } else if (event instanceof GuildJoinEvent) {
             System.out.println("Joined server: " + ((GuildJoinEvent) event).getGuild().getId());
-            if (!sqlManager.isConnectionNull()) {
+            SQLManager sql = new SQLManager();
+            if (!sql.isConnectionNull()) {
                 long lobbyID;
                 if (((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getName().equalsIgnoreCase("lobby")) {
                     lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("lobby",true).get(0).getIdLong();
@@ -71,15 +74,15 @@ public class Main implements EventListener
                     lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("general",true).get(0).getIdLong();
                 }
                 if (Long.toString(lobbyID).length()== 18) {
-                    sqlManager.addServer(((GuildJoinEvent) event).getGuild().getIdLong(), lobbyID, true, true, true, true);
+                    sql.addServer(((GuildJoinEvent) event).getGuild().getIdLong(), lobbyID, true, true, true, true);
                 } else {
-                    sqlManager.addServer(((GuildJoinEvent) event).getGuild().getIdLong(),0,false,false,true,true);
+                    sql.addServer(((GuildJoinEvent) event).getGuild().getIdLong(),0,false,false,true,true);
                 }
 
             } else {
                 System.out.println("sqlManager wasn't connected, trying to connect then trying again.");
-                sqlManager.connect();
-                sqlManager.addServer(((GuildJoinEvent) event).getGuild().getIdLong(),0,false,false,true,true);
+                sql.connect();
+                sql.addServer(((GuildJoinEvent) event).getGuild().getIdLong(),0,false,false,true,true);
             }
         }
     }

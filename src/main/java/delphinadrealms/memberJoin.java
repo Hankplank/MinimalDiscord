@@ -13,9 +13,9 @@ public class memberJoin {
 
     public void memberJoinedEvent(Event event) {
         long guildID = ((GuildMemberJoinEvent) event).getGuild().getIdLong();
-
-        if (Main.sqlManager.getServerJoinMessageEnabled(guildID)) {
-            long channelID = Main.sqlManager.getServerLobbyID(guildID);
+        SQLManager sql = new SQLManager();
+        if (sql.getServerJoinMessageEnabled(guildID)) {
+            long channelID = sql.getServerLobbyID(guildID);
             if (Long.toString(channelID).equalsIgnoreCase("0")) {
                 event.getJDA().getTextChannelById("lobby").sendMessage("Hello "
                         + ((GuildMemberJoinEvent) event).getMember().getAsMention() + " Welcome to the server!").queue();

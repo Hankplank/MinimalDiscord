@@ -238,4 +238,13 @@ return true;
         }
     }
 
+    public void close() {
+        try {
+            connect.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

@@ -18,6 +18,7 @@ class messageReceivedEvent {
         MessageChannel channel = ((MessageReceivedEvent) event).getChannel(); //gets the text channel that the mesasge is sent in
         Message message = ((MessageReceivedEvent) event).getMessage(); // creates variable for the message in a easier to see format
         String[] args = messageFormatted.split(" ");
+        SQLManager sql = new SQLManager();
         switch (args[0]) {
             case "roles":
                 channel.sendMessage("The roles this user belongs to are: " + message.getMember().getRoles()).queue();
@@ -73,12 +74,12 @@ class messageReceivedEvent {
                 commandList.printHelpComamnd(channel);
                 break;
             case "addserver":
-                Main.sqlManager.addServer(((MessageReceivedEvent) event).getGuild().getIdLong(),message.getTextChannel().getIdLong(),true,true,true,true);
+
+                sql.addServer(((MessageReceivedEvent) event).getGuild().getIdLong(),message.getTextChannel().getIdLong(),true,true,true,true);
                 channel.sendMessage("Adding server...").queue();
                 break;
             case "changelobby":
                 if (message.getMember().getPermissions().toString().contains("ADMINISTRATOR")) {
-                    SQLManager sql = new SQLManager();
                     //true if it worked, false if it failed
                     boolean result = sql.changeLobbyID(message.getGuild().getIdLong(),args[1]);
                     if (result) {
@@ -103,7 +104,12 @@ class messageReceivedEvent {
             case "enableleague":
                 enableDisablePubg.changeLeagueEnabled(message, true);
                 break;
+            default:
+                channel.sendMessage("Command not recognized. Refer to documentation or just type it right next time.").queue();
+                break;
+
         }
+        sql.close();
 /*
         if (messageFormatted.startsWith("roles")) {
            // System.out.println(((MessageReceivedEvent) event).getAuthor().getJDA().getRoles().toString());
