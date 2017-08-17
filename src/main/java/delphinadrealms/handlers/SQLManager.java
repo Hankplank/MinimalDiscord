@@ -1,4 +1,4 @@
-package delphinadrealms.commands;
+package delphinadrealms.handlers;
 
 import pro.lukasgorny.dto.Player;
 

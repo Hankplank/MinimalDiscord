@@ -1,6 +1,6 @@
 package delphinadrealms;
 
-import delphinadrealms.commands.SQLManager;
+import delphinadrealms.handlers.SQLManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.events.Event;
@@ -12,13 +12,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.EventListener;
 import javax.security.auth.login.LoginException;
+import delphinadrealms.commands.urbanDict;
 
 
 public class Main implements EventListener
 {
     public static String[] argsGlobal;
 
-    public static SQLManager sqlManager = new SQLManager();
 
     public static void main(String[] args) throws IllegalArgumentException, LoginException, RateLimitedException {
         argsGlobal = args;
@@ -27,7 +27,6 @@ public class Main implements EventListener
         } else {
             new JDABuilder(AccountType.BOT).setToken(args[0]).addEventListener(new Main()).buildAsync();
         }
-        sqlManager = new SQLManager();
         /*
         if (sqlManager.isConnectionNull()) {
             sqlManager.connect();

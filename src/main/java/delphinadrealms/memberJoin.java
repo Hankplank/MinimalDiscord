@@ -1,10 +1,8 @@
 package delphinadrealms;
 
-import delphinadrealms.commands.SQLManager;
-import net.dv8tion.jda.core.entities.Member;
+import delphinadrealms.handlers.SQLManager;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.core.managers.GuildController;
 
 /**
  * Created by henry27 on 7/21/2017.

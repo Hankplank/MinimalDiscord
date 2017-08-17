@@ -1,6 +1,6 @@
 package test;
 
-import delphinadrealms.commands.SQLManager;
+import delphinadrealms.handlers.SQLManager;
 
 import java.util.HashMap;
 

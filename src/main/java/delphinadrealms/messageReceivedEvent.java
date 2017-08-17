@@ -1,10 +1,12 @@
 package delphinadrealms;
 
 import delphinadrealms.commands.*;
+import delphinadrealms.handlers.SQLManager;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import delphinadrealms.commands.urbanDict;
 
 /**
  * Created by henry27 on 7/21/2017.
@@ -103,6 +105,12 @@ class messageReceivedEvent {
                 break;
             case "enableleague":
                 enableDisablePubg.changeLeagueEnabled(message, true);
+                break;
+            case "ud":
+            case "urbandict":
+            case "urbandictionary":
+                urbanDict ud = new urbanDict();
+                channel.sendMessage(ud.findWord(args[1])).queue();
                 break;
             default:
                 channel.sendMessage("Command not recognized. Refer to documentation or just type it right next time.").queue();

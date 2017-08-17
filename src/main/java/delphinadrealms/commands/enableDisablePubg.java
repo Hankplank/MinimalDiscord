@@ -1,6 +1,7 @@
 package delphinadrealms.commands;
 
 import delphinadrealms.Main;
+import delphinadrealms.handlers.SQLManager;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.Event;
 
@@ -13,19 +14,21 @@ public class enableDisablePubg {
 
     public static void changePubgEnabled(Message message, boolean bool) {
         long serverid = message.getGuild().getIdLong();
+        SQLManager sql = new SQLManager();
         if (bool == true) {
-            Main.sqlManager.setPUBGEnabled(serverid);
+            sql.setPUBGEnabled(serverid);
         } else if (bool == false) {
-            Main.sqlManager.setPUBGDisabled(serverid);
+            sql.setPUBGDisabled(serverid);
         }
     }
 
     public static void changeLeagueEnabled(Message message, boolean bool) {
     long serverid = message.getGuild().getIdLong();
+    SQLManager sql = new SQLManager();
         if (bool == true) {
-        Main.sqlManager.setLeagueEnabled(serverid);
+        sql.setLeagueEnabled(serverid);
     } else if (bool == false) {
-        Main.sqlManager.setLeagueDisabled(serverid);
+        sql.setLeagueDisabled(serverid);
     }
 }
 }
