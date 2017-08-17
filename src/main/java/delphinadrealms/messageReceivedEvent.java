@@ -8,6 +8,8 @@ import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import delphinadrealms.commands.urbanDict;
 
+import java.util.ArrayList;
+
 /**
  * Created by henry27 on 7/21/2017.
  */
@@ -21,6 +23,7 @@ class messageReceivedEvent {
         Message message = ((MessageReceivedEvent) event).getMessage(); // creates variable for the message in a easier to see format
         String[] args = messageFormatted.split(" ");
         SQLManager sql = new SQLManager();
+        urbanDict ud = new urbanDict();
         switch (args[0]) {
             case "roles":
                 channel.sendMessage("The roles this user belongs to are: " + message.getMember().getRoles()).queue();
@@ -107,10 +110,16 @@ class messageReceivedEvent {
                 enableDisablePubg.changeLeagueEnabled(message, true);
                 break;
             case "ud":
+                messageFormatted = messageFormatted.substring(3);
+                channel.sendMessage(ud.findWord(messageFormatted)).queue();
+                break;
             case "urbandict":
+                messageFormatted = messageFormatted.substring(10);
+                channel.sendMessage(ud.findWord(messageFormatted)).queue();
+                break;
             case "urbandictionary":
-                urbanDict ud = new urbanDict();
-                channel.sendMessage(ud.findWord(args[1])).queue();
+                messageFormatted = messageFormatted.substring(16);
+                channel.sendMessage(ud.findWord(messageFormatted)).queue();
                 break;
             default:
                 channel.sendMessage("Command not recognized. Refer to documentation or just type it right next time.").queue();

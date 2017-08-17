@@ -19,6 +19,7 @@ public class urbanDict {
 
     public String findWord(String query) {
         try {
+            query = query.replace(" ", "+");
             URL url = new URL("http://api.urbandictionary.com/v0/define?term=" + query);
             InputStream in = url.openStream();
             Scanner scanner = new Scanner(in);
