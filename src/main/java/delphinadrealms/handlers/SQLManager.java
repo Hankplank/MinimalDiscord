@@ -23,7 +23,7 @@ public class SQLManager {
         try {
             String url = "jdbc:SQLite:/root/SQLBot/discordbot.db";
             connect = DriverManager.getConnection(url);
-            System.out.println("Connection to SQLite has been established. At " + url);
+            //System.out.println("Connection to SQLite has been established. At " + url);
 
             // CREATES A NEW TABLE IF ONE DOESNT EXIST, IF ONE ALREADY EXISTS DOES NOTHING
             String createTable = "CREATE TABLE IF NOT EXISTS servers (serverid long(18)," +
