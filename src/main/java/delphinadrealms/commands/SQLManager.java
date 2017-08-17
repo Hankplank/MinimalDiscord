@@ -217,11 +217,23 @@ public class SQLManager {
 return true;
     }
 
-    public void changeLobbyID(long serverID, String channelID) {
-        if (!connect.equals(null)) {
-            String command = "UPDATE servers SET lobbyChannelID = \"" + channelID + "\" WHERE serverID = " + serverID + ";";
-            // UPDATE servers SET lobbychannelID = "334918139580252172" WHERE serverid = 334189774741045249;
+    public String changeLobbyID(long serverID, String channelID) {
+        long channelIdLong = Long.getLong(channelID);
+        if (!connect.equals(null) && channelIdLong > 0) {
+            String command = "UPDATE servers SET lobbyChannelID = \"" + channelIdLong + "\" WHERE serverID = " + serverID + ";";
+            try {
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(command);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
+
+            // UPDATE servers SET lobbychannelID = "334918139580252172" WHERE serverid = 334189774741045249;
+            return "worked";
+        } else {
+            return "error";
         }
     }
+
 }
