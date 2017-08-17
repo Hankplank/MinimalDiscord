@@ -59,13 +59,17 @@ class messageReceivedEvent {
             channel.sendMessage("Your user id is: " + userID).queue();
 
         } else if (messageFormatted.startsWith("pubg")) {
+            if (args.length > 3) {
                 String username = args[1];
                 String region = args[2];
                 String mode = args[3];
                 if (mode.equalsIgnoreCase("all")) {
                     PUBG.getAllPUBGStats(channel,username,region);
-                } else if (mode.equalsIgnoreCase("solo") || mode.equalsIgnoreCase("duo") || mode.equalsIgnoreCase("squad")){
+                } else if (mode.equalsIgnoreCase("solo") || mode.equalsIgnoreCase("duo") || mode.equalsIgnoreCase("squad")) {
                     PUBG.getPubgStats(channel, username, region, mode);
+                }
+                } else {
+                    channel.sendMessage("Use the command as: " + Settings.COMMAND_PREFIX + "pubg almostfamous na squad").queue();
                 }
             } else if (messageFormatted.contains("help")) {
             commandList.printHelpComamnd(channel);
