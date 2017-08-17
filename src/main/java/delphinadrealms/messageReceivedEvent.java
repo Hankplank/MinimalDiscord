@@ -39,21 +39,27 @@ class messageReceivedEvent {
                 break;
             case "lolname":
                 //String[] regions= {"na","euw","eune","br","lan","las","oce","ru","tr"};
+
                 if (!messageFormatted.contains(",")) {
                     channel.sendMessage("Please use the format in this example,using the name hank and the region na: " + Settings.COMMAND_PREFIX + "lolname hank na").queue();
                 } else {
-                    channel.sendMessage(CheckNameLoL.isNameOpen(messageFormatted)).queue();
+                  //  channel.sendMessage(CheckNameLoL.isNameOpen(messageFormatted)).queue();
+                    channel.sendMessage("Command is disabled until I feel like fixing it, sorry. Use http://lolnamecheck.jj.ai/ if you wish to check league names.").queue();
                 }
                 break;
             case "leaguename":
-                messageFormatted = messageFormatted.substring(10);
-                if (!getLeagueMatch.doesPlayerExist(message, messageFormatted)) {
-                    getLeagueMatch.setPlayerName(message, messageFormatted, channel);
-                    System.out.println("user doesn't exist");
-                } else {
-                    System.out.println("user exists");
+                if (sql.getLeagueEnabled(message.getGuild().getIdLong())) {
+                    messageFormatted = messageFormatted.substring(10);
+                    if (!getLeagueMatch.doesPlayerExist(message, messageFormatted)) {
+                        getLeagueMatch.setPlayerName(message, messageFormatted, channel);
+                        System.out.println("user doesn't exist");
+                    } else {
+                        System.out.println("user exists");
+                    }
+                    break;
                 }
                 break;
+
             case "channelid":
                 System.out.println(channel.getIdLong());
                 break;
@@ -93,8 +99,7 @@ class messageReceivedEvent {
                         channel.sendMessage("Please type use the lobbyId of the channel you want the leave and join messages to be sent in as the only argument.");
                     }
                 } else {
-                    channel.sendMessage("You need to have the Administrator permission to use this.");
-
+                    channel.sendMessage("You need to have the Administrator permission to use this.").queue();
                 }
                 break;
             case "disablepubg":

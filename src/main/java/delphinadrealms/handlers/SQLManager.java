@@ -7,13 +7,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-/**
- * Created by henry27 on 8/7/2017.
- */
+
 public class SQLManager {
 
     public SQLManager() {
-        this.connect = null;
         connect();
     }
 
@@ -49,7 +46,7 @@ public class SQLManager {
                 String createTable = "CREATE TABLE IF NOT EXISTS servers (serverid long(18)," +
                         " lobbyChannelID long(18), sendJoinMessage boolean, sendLeaveMessage boolean, enablePUBG boolean, enableLeague boolean);";
                 Statement createIfDoesntExist = connect.createStatement();
-
+                ResultSet table = createIfDoesntExist.executeQuery(createTable);
                 String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
                         + enableLeague + "\");";
                /* System.out.println("INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
@@ -220,14 +217,18 @@ return true;
     }
 
     public boolean changeLobbyID(long serverID, String channelID) {
-        long channelIdLong = Long.getLong(channelID);
+        long channelIdLong = Long.parseLong(channelID);
         if (!connect.equals(null) && channelIdLong > 0) {
             String command = "UPDATE servers SET lobbyChannelID = \"" + channelIdLong + "\" WHERE serverID = " + serverID + ";";
             try {
                 Statement statement = connect.createStatement();
-                ResultSet rs = statement.executeQuery(command);
+                statement.executeQuery(command);
             } catch (SQLException e) {
-                e.printStackTrace();
+                if (e.getMessage().contains("does not return ResultSet")) {
+                    //do nothing
+                } else {
+                    System.out.println(e.getMessage());
+                }
             }
 
 
