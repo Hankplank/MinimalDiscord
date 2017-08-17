@@ -10,3 +10,5 @@ Features:
  - PUBG command to gather pubg stats of a player, using their name on PUBG
  + Check when a name of League Of Legends will be available, or if its already open. Supports all regions except Garena
  - More to come!
+
+If you want the bot to join your server, use this link! https://discordapp.com/oauth2/authorize?client_id=329982164164804609&scope=bot
