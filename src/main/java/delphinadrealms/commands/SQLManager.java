@@ -64,31 +64,33 @@ public class SQLManager {
     }
 
     public void removeServer(long serverID) {
-        if (!connect.equals(null)) {
             try {
-                System.out.println(serverID);
-                String command = "DELETE FROM servers WHERE serverid=" + Long.toString(serverID) + ";";
-                Statement statement = connect.createStatement();
-                ResultSet rs = statement.executeQuery(command);
-
+                if (!connect.isClosed()) {
+                    System.out.println(serverID);
+                    String command = "DELETE FROM servers WHERE serverid=" + Long.toString(serverID) + ";";
+                    Statement statement = connect.createStatement();
+                    ResultSet rs = statement.executeQuery(command);
+                }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-        }
+
     }
 
     public long getServerLobbyID(long serverID) {
-        if (!connect.equals(null)) {
-            try {
-                String command = "SELECT * FROM SERVERS WHERE serverid=" + serverID + ";";
-                Statement statement = connect.createStatement();
-                ResultSet rs = statement.executeQuery(command);
-                return rs.getLong("lobbyChannelID");
 
+            try {
+                if (connect.isClosed()) {
+
+                    String command = "SELECT * FROM SERVERS WHERE serverid=" + serverID + ";";
+                    Statement statement = connect.createStatement();
+                    ResultSet rs = statement.executeQuery(command);
+                    return rs.getLong("lobbyChannelID");
+                }
             } catch (SQLException e) {
                 return 0;
             }
-        }
+
         return 0;
     }
 
@@ -217,7 +219,7 @@ public class SQLManager {
 return true;
     }
 
-    public String changeLobbyID(long serverID, String channelID) {
+    public boolean changeLobbyID(long serverID, String channelID) {
         long channelIdLong = Long.getLong(channelID);
         if (!connect.equals(null) && channelIdLong > 0) {
             String command = "UPDATE servers SET lobbyChannelID = \"" + channelIdLong + "\" WHERE serverID = " + serverID + ";";
@@ -230,9 +232,9 @@ return true;
 
 
             // UPDATE servers SET lobbychannelID = "334918139580252172" WHERE serverid = 334189774741045249;
-            return "worked";
+            return true;
         } else {
-            return "error";
+            return false;
         }
     }
 
