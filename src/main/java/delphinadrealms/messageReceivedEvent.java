@@ -4,11 +4,13 @@ import delphinadrealms.commands.*;
 import delphinadrealms.handlers.SQLManager;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import delphinadrealms.commands.urbanDict;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by henry27 on 7/21/2017.
@@ -24,7 +26,7 @@ class messageReceivedEvent {
         String[] args = messageFormatted.split(" ");
         SQLManager sql = new SQLManager();
         urbanDict ud = new urbanDict();
-        switch (args[0]) {
+        switch (args[0].toLowerCase()) {
             case "roles":
                 channel.sendMessage("The roles this user belongs to are: " + message.getMember().getRoles()).queue();
                 break;
@@ -39,7 +41,6 @@ class messageReceivedEvent {
                 break;
             case "lolname":
                 //String[] regions= {"na","euw","eune","br","lan","las","oce","ru","tr"};
-
                 if (!messageFormatted.contains(",")) {
                     channel.sendMessage("Please use the format in this example,using the name hank and the region na: " + Settings.COMMAND_PREFIX + "lolname hank na").queue();
                 } else {
@@ -85,8 +86,7 @@ class messageReceivedEvent {
                 commandList.printHelpComamnd(channel);
                 break;
             case "addserver":
-
-                sql.addServer(((MessageReceivedEvent) event).getGuild().getIdLong(),message.getTextChannel().getIdLong(),true,true,true,true);
+                sql.addServer(message.getGuild().getIdLong(),message.getTextChannel().getIdLong(),true,true,true,true);
                 channel.sendMessage("Adding server...").queue();
                 break;
             case "changelobby":
@@ -125,6 +125,16 @@ class messageReceivedEvent {
             case "urbandictionary":
                 messageFormatted = messageFormatted.substring(16);
                 channel.sendMessage(ud.findWord(messageFormatted)).queue();
+                break;
+            case "listchannels":
+                List<TextChannel> channels = event.getJDA().getTextChannelsByName("lobby",true);
+                String channelID = channels.toString();
+                channelID = channelID.substring(channelID.indexOf("("),channelID.indexOf(")"));
+                channelID = channelID.replace("(","");
+                channelID = channelID.replace(")","");
+                System.out.println(channels.toString());
+                System.out.println(channelID);
+                System.out.println(Long.parseLong(channelID));
                 break;
             default:
                 channel.sendMessage("Command not recognized. Refer to documentation or just type it right next time.").queue();

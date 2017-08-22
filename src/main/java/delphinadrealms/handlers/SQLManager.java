@@ -43,16 +43,22 @@ public class SQLManager {
             System.out.println("Working");
             try {
                 // CREATES A NEW TABLE IF ONE DOESNT EXIST, IF ONE ALREADY EXISTS DOES NOTHING
-                String createTable = "CREATE TABLE IF NOT EXISTS servers (serverid long(18)," +
+                String createTable = "CREATE TABLE IF NOT EXISTS servers (serverid long(18) unique," +
                         " lobbyChannelID long(18), sendJoinMessage boolean, sendLeaveMessage boolean, enablePUBG boolean, enableLeague boolean);";
-                Statement createIfDoesntExist = connect.createStatement();
-                ResultSet table = createIfDoesntExist.executeQuery(createTable);
-                String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
-                        + enableLeague + "\");";
-               /* System.out.println("INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
-                        + enableLeague + "\");"); */
+                Statement createTableStatement = connect.createStatement();
+                ResultSet table = createTableStatement.executeQuery(createTable);
+                /*String command = "INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
+                        + enableLeague + "\");"; */
+                System.out.println("INSERT INTO SERVERS VALUES (" + serverID + "," + lobbyChannelID + ", \"" +  sendJoinMessage + "\" , \"" + sendLeaveMessage + "\" , \"" + enablePUBG + "\" , \""
+                        + enableLeague + "\");");
+                String command = "INSERT INTO servers VALUES (334189774741045249, 334190910852169729, \"true\" , \"true\" , \"true\" , \"true\" );";
                 Statement statement = connect.createStatement();
-                ResultSet rs = statement.executeQuery(command);
+                try {
+                    ResultSet rs = statement.executeQuery(command);
+                } catch (SQLException e) {
+
+                }
+
                 System.out.println("New server has been added with the serverID of: " + serverID + ".");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -66,7 +72,12 @@ public class SQLManager {
                     System.out.println(serverID);
                     String command = "DELETE FROM servers WHERE serverid=" + Long.toString(serverID) + ";";
                     Statement statement = connect.createStatement();
-                    ResultSet rs = statement.executeQuery(command);
+                    try {
+                        ResultSet rs = statement.executeQuery(command);
+                    } catch (SQLException e) {
+
+                    }
+
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -210,7 +221,7 @@ public class SQLManager {
                     return false;
                 }
             } catch (SQLException e) {
-                System.out.println("Error on in SQLManager.java in getServerJoinMessageEnabled.\n" + e.getMessage());
+                System.out.println("Error in SQLManager.java in getServerJoinMessageEnabled.\n" + e.getMessage());
             }
         }
 return true;

@@ -72,8 +72,10 @@ public class Main implements EventListener
                 } else {
                     lobbyID = ((GuildJoinEvent) event).getGuild().getTextChannelsByName("general",true).get(0).getIdLong();
                 }
+                long guildID = ((GuildJoinEvent) event).getGuild().getIdLong();
                 if (Long.toString(lobbyID).length()== 18) {
-                    sql.addServer(((GuildJoinEvent) event).getGuild().getIdLong(), lobbyID, true, true, true, true);
+                    System.out.println(guildID + " " + lobbyID);
+                    sql.addServer(guildID,lobbyID, true, true, true, true);
                 } else {
                     sql.addServer(((GuildJoinEvent) event).getGuild().getIdLong(),0,false,false,true,true);
                 }
@@ -81,6 +83,7 @@ public class Main implements EventListener
             } else {
                 System.out.println("sqlManager wasn't connected, trying to connect then trying again.");
                 sql.connect();
+
                 sql.addServer(((GuildJoinEvent) event).getGuild().getIdLong(),0,false,false,true,true);
             }
         }
