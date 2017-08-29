@@ -56,7 +56,7 @@ public class PUBG {
         PUBGRegion pubgRegion = getRegion(region,channel);
         if (!pubgRegion.equals(null)) {
             try {
-                //player decs
+                //player decsewq
                 Player solo = pubg.getByNickname(username,PUBGMode.solo,pubgRegion);
                 Player duo = pubg.getByNickname(username,PUBGMode.duo,pubgRegion);
                 Player squad = pubg.getByNickname(username,PUBGMode.squad,pubgRegion);
@@ -94,7 +94,7 @@ public class PUBG {
     }
 
     private static String[] getStats(Player player) {
-        JPubg pubg = JPubgFactory.getWrapper("8d4da968-808e-40c8-a89b-668d17246c95");
+        JPubg pubg = JPubgFactory.getWrapper(Main.argsGlobal[1]);
         Stat rating;
         Stat kills;
         Stat kdr;
