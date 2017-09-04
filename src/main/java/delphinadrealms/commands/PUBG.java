@@ -57,29 +57,27 @@ public class PUBG {
         PUBGRegion pubgRegion = getRegion(region,channel);
         if (!pubgRegion.equals(null)) {
             try {
-                //player decsewq
                 Player solo = pubg.getByNickname(username,PUBGMode.solo,pubgRegion);
                 Player duo = pubg.getByNickname(username,PUBGMode.duo,pubgRegion);
                 Player squad = pubg.getByNickname(username,PUBGMode.squad,pubgRegion);
 
                 String[] soloStats = getStats(solo);
                 if (soloStats[0].equalsIgnoreCase("error")) {
-                    channel.sendMessage("Something went wrong. Try again please");
+                    channel.sendMessage("No stats for that user").queue();
                 } else {
-                    channel.sendMessage("```Stats for Player: %s in solos\nRating: %s\nKills %s\nKDR %s\nKills Per Game: %s\nAverage Damage Per Round: %s\nWins: %s\nMost Kills: %s```",username, soloStats[0],soloStats[1],soloStats[2],soloStats[3],soloStats[4],soloStats[5],soloStats[6],soloStats[7]).queue();
+                    channel.sendMessage("```Stats for Player: %s in: Squads\nRating: %s\nKills: %s\nKDR: %s\nKills Per Game: %s\nAverage Damage Per round: %s\nWins: %s\nRounds Played: %s\nMost Kills: %s", username, soloStats[0],soloStats[1],soloStats[2],soloStats[3],soloStats[4],soloStats[5],soloStats[6],soloStats[7]).queue();
                 }
                 String[] duoStats = getStats(duo);
                 if (duoStats[0].equalsIgnoreCase("error")) {
-                    channel.sendMessage("Something went wrong. Try again please");
+                    channel.sendMessage("No stats for that user").queue();
                 } else {
-                    channel.sendMessage("```Stats for Player: %s in Duos\nRating: %s\nKills %s\nKDR %s\nKills Per Game: %s\nAverage Damage Per Round: %s\nWins: %s\nMost Kills: %s```",username, duoStats[0],duoStats[1],duoStats[2],duoStats[3],duoStats[4],duoStats[5],duoStats[6],duoStats[7]).queue();
-
+                    channel.sendMessage("```Stats for Player: %s in: Squads\nRating: %s\nKills: %s\nKDR: %s\nKills Per Game: %s\nAverage Damage Per round: %s\nWins: %s\nRounds Played: %s\nMost Kills: %s", username, duoStats[0],duoStats[1],duoStats[2],duoStats[3],duoStats[4],duoStats[5],duoStats[6],duoStats[7]).queue();
                 }
                 String[] squadStats = getStats(squad);
                 if (squadStats[0].equalsIgnoreCase("error")) {
-                    channel.sendMessage("Something went wrong. Try again please");
+                    channel.sendMessage("No stats for that user").queue();
                 } else {
-                    channel.sendMessage("```Stats for Player: %s in squads\nRating: %s\nKills %s\nKDR %s\nKills Per Game: %s\nAverage Damage Per Round: %s\nWins: %s\nMost Kills: %s ```",username, squadStats[0],squadStats[1],squadStats[2],squadStats[3],squadStats[4],squadStats[5],squadStats[6],squadStats[7]).queue();
+                    channel.sendMessage("```Stats for Player: %s in: Squads\nRating: %s\nKills: %s\nKDR: %s\nKills Per Game: %s\nAverage Damage Per round: %s\nWins: %s\nRounds Played: %s\nMost Kills: %s", username, squadStats[0],squadStats[1],squadStats[2],squadStats[3],squadStats[4],squadStats[5],squadStats[6],squadStats[7]).queue();
 
                 }
             } catch (ApiException e) {
@@ -115,7 +113,12 @@ public class PUBG {
              String[] Stats = {rating.getStringValue(),kills.getStringValue(),kdr.getStringValue(), KillsPerGame.getStringValue(),AvgDmgPerRound.getStringValue(),wins.getStringValue(),roundsPlayed.getStringValue(),mostKills.getStringValue()};
              return Stats;
          } catch (ApiException e) {
-             e.printStackTrace();
+             if (e.getMessage().contains("no matches played")) {
+
+             } else {
+                 e.printStackTrace();
+             }
+
              String[] Stats = {"error"};
              return Stats;
          }
