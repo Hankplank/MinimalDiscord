@@ -23,7 +23,7 @@
     <dependency>
         <groupId>net.dv8tion</groupId>
         <artifactId>JDA</artifactId>
-        <version>3.1.0_204</version>
+        <version>3.3.1_284</version>
     </dependency>
     <dependency>
         <groupId>com.sedmelluq</groupId>

@@ -65,19 +65,19 @@ public class PUBG {
                 if (soloStats[0].equalsIgnoreCase("error")) {
                     channel.sendMessage("No stats for that user").queue();
                 } else {
-                    channel.sendMessage("```Stats for Player: %s in: Squads\nRating: %s\nKills: %s\nKDR: %s\nKills Per Game: %s\nAverage Damage Per round: %s\nWins: %s\nRounds Played: %s\nMost Kills: %s", username, soloStats[0],soloStats[1],soloStats[2],soloStats[3],soloStats[4],soloStats[5],soloStats[6],soloStats[7]).queue();
+                    channel.sendMessage("```Stats for Player: %s in: Solos\nRating: %s\nKills: %s\nKDR: %s\nKills Per Game: %s\nAverage Damage Per round: %s\nWins: %s\nRounds Played: %s\nMost Kills: %s```", username, soloStats[0],soloStats[1],soloStats[2],soloStats[3],soloStats[4],soloStats[5],soloStats[6],soloStats[7]).queue();
                 }
                 String[] duoStats = getStats(duo);
                 if (duoStats[0].equalsIgnoreCase("error")) {
                     channel.sendMessage("No stats for that user").queue();
                 } else {
-                    channel.sendMessage("```Stats for Player: %s in: Squads\nRating: %s\nKills: %s\nKDR: %s\nKills Per Game: %s\nAverage Damage Per round: %s\nWins: %s\nRounds Played: %s\nMost Kills: %s", username, duoStats[0],duoStats[1],duoStats[2],duoStats[3],duoStats[4],duoStats[5],duoStats[6],duoStats[7]).queue();
+                    channel.sendMessage("```Stats for Player: %s in: Duos\nRating: %s\nKills: %s\nKDR: %s\nKills Per Game: %s\nAverage Damage Per round: %s\nWins: %s\nRounds Played: %s\nMost Kills: %s```", username, duoStats[0],duoStats[1],duoStats[2],duoStats[3],duoStats[4],duoStats[5],duoStats[6],duoStats[7]).queue();
                 }
                 String[] squadStats = getStats(squad);
                 if (squadStats[0].equalsIgnoreCase("error")) {
                     channel.sendMessage("No stats for that user").queue();
                 } else {
-                    channel.sendMessage("```Stats for Player: %s in: Squads\nRating: %s\nKills: %s\nKDR: %s\nKills Per Game: %s\nAverage Damage Per round: %s\nWins: %s\nRounds Played: %s\nMost Kills: %s", username, squadStats[0],squadStats[1],squadStats[2],squadStats[3],squadStats[4],squadStats[5],squadStats[6],squadStats[7]).queue();
+                    channel.sendMessage("```Stats for Player: %s in: Squads\nRating: %s\nKills: %s\nKDR: %s\nKills Per Game: %s\nAverage Damage Per round: %s\nWins: %s\nRounds Played: %s\nMost Kills: %s```", username, squadStats[0],squadStats[1],squadStats[2],squadStats[3],squadStats[4],squadStats[5],squadStats[6],squadStats[7]).queue();
 
                 }
             } catch (ApiException e) {
